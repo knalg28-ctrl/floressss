@@ -27,11 +27,11 @@
     }
 
     .fade-in {
-      animation: fadeIn 1s ease-in-out forwards;
+      animation: fadeIn 2s ease-in-out forwards;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
+      from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
     }
 
@@ -44,12 +44,19 @@
     .frase {
       font-size: 2em;
       color: #ff4081;
+      animation: aparecer 2s ease-in-out;
     }
 
     .serendipia {
       font-size: 3em;
       font-weight: bold;
       color: #ff66b2;
+      animation: aparecer 2s ease-in-out;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .corazones {
@@ -98,6 +105,7 @@
       font-size: 1.2em;
       margin-bottom: 30px;
       text-align: center;
+      animation: aparecer 2s ease-in-out;
     }
 
     svg {
@@ -109,27 +117,51 @@
       fill: none;
       stroke: yellow;
       stroke-width: 1;
-      opacity: 0.7;
+      opacity: 0.8;
+      animation: girar 20s linear infinite;
+      transform-origin: center;
+    }
+
+    @keyframes girar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .centro {
       fill: brown;
+      animation: latir 2s infinite;
+    }
+
+    @keyframes latir {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
 
     .tallo {
-      width: 20px;
-      height: 150px;
+      width: 30px;
+      height: 200px;
       background: green;
+      margin: 0 auto;
       margin-top: -40px;
+      animation: crecer 2s ease-out forwards;
+      transform: scaleY(0);
+      transform-origin: top;
     }
 
-    .flor:hover {
-      transform: rotate(360deg);
-      transition: transform 3s ease-in-out;
+    @keyframes crecer {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
     }
 
     .flor {
-      transition: transform 1s;
+      opacity: 0;
+      animation: aparecerFlor 3s ease-in-out forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes aparecerFlor {
+      from { opacity: 0; transform: scale(0.5) rotate(-30deg); }
+      to { opacity: 1; transform: scale(1) rotate(0deg); }
     }
 
     audio {
@@ -162,14 +194,12 @@
   <!-- 🌻 ETAPA 3: FLOR -->
   <div id="girasol-container">
     <div class="header-text">
-      🌼 En cada rincón donde miras, la primavera está escribiendo poesía con colores. 🌼
+      🌼 Para vos con amor 🌼
     </div>
     <div class="flor">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <g transform="translate(100,100)">
-          <g id="petalos"></g>
-          <circle class="centro" r="20" />
-        </g>
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(200,200)" id="petalos"></g>
+        <circle class="centro" cx="200" cy="200" r="40" />
       </svg>
       <div class="tallo"></div>
     </div>
@@ -194,36 +224,33 @@
       document.getElementById('etapa1').classList.add('hidden');
       document.getElementById('etapa2').classList.remove('hidden');
       document.getElementById('etapa2').classList.add('fade-in');
-    }, 5000); // Después de 5s
+    }, 5000);
 
     setTimeout(() => {
       document.getElementById('etapa2').classList.add('hidden');
       document.getElementById('corazones').classList.add('hidden');
       document.getElementById('girasol-container').style.display = 'flex';
       generarFlor();
-    }, 8000); // Después de 5 + 3s
+    }, 8000);
 
     // 🌻 Flor dinámica
     function generarFlor() {
       const svgNS = "http://www.w3.org/2000/svg";
       const group = document.getElementById("petalos");
 
-      for (let i = 0; i < 36; i++) {
-        const path = document.createElementNS(svgNS, "path");
-        let d = "M0 0";
+      const numPetalos = 18; // número de pétalos
 
-        for (let j = 0; j < 18; j++) {
-          const r = 40 + j * 2;
-          const angle = (Math.PI / 9);
-          const x = r * Math.cos(angle);
-          const y = r * Math.sin(angle);
-          d += ` L ${x} ${y}`;
+      for (let i = 0; i < numPetalos; i++) {
+        for (let k = 0; k < 12; k++) {
+          const petalo = document.createElementNS(svgNS, "ellipse");
+          petalo.setAttribute("cx", 0);
+          petalo.setAttribute("cy", -100);
+          petalo.setAttribute("rx", 25 + k);
+          petalo.setAttribute("ry", 80 + k*2);
+          petalo.setAttribute("class", "petalo");
+          petalo.setAttribute("transform", `rotate(${(360/numPetalos) * i})`);
+          group.appendChild(petalo);
         }
-
-        path.setAttribute("d", d);
-        path.setAttribute("transform", `rotate(${i * 10})`);
-        path.setAttribute("class", "petalo");
-        group.appendChild(path);
       }
     }
   </script>
