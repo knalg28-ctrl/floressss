@@ -137,7 +137,7 @@
       50% { transform: scale(1.1); }
     }
 
-    .tallo {
+.tallo {
       width: 30px;
       height: 200px;
       background: green;
@@ -157,6 +157,7 @@
       opacity: 0;
       animation: aparecerFlor 3s ease-in-out forwards;
       animation-delay: 1s;
+      user-select: none;
     }
 
     @keyframes aparecerFlor {
@@ -168,13 +169,36 @@
       display: none;
     }
 
+    /* Botón para activar música */
+    #activarMusica {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 20;
+      padding: 10px 15px;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 0 10px #ff69b4;
+      transition: background 0.3s;
+    }
+    #activarMusica:hover {
+      background: #ff85c1;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Botón para activar música manualmente -->
+  <button id="activarMusica" aria-label="Activar música">🎵 Activar Música</button>
+
   <!-- 🎵 Música -->
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_b1695b48e1.mp3" type="audio/mp3">
+  <audio id="musica" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_b1695b48e1.mp3" type="audio/mp3" />
     Tu navegador no soporta audio.
   </audio>
 
