@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>🌸 Proyecto Primavera</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <style>
     * {
       margin: 0;
@@ -22,14 +22,9 @@
       color: white;
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
-    .fade-in {
-      animation: fadeIn 2s ease-in-out forwards;
-    }
-
+    .fade-in { animation: fadeIn 2s ease-in-out forwards; }
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
@@ -39,16 +34,17 @@
       position: absolute;
       text-align: center;
       padding: 20px;
+      width: 100%;
     }
 
     .frase {
-      font-size: 2em;
+      font-size: 6vw;
       color: #ff4081;
       animation: aparecer 2s ease-in-out;
     }
 
     .serendipia {
-      font-size: 3em;
+      font-size: 8vw;
       font-weight: bold;
       color: #ff66b2;
       animation: aparecer 2s ease-in-out;
@@ -75,20 +71,13 @@
     }
 
     @keyframes flotar {
-      0% {
-        transform: translateY(100vh) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1.5);
-        opacity: 0;
-      }
+      0%   { transform: translateY(100vh) scale(1); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
     }
 
     #girasol-container {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       background: black;
       color: white;
       width: 100vw;
@@ -97,20 +86,20 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 10px;
     }
 
     .header-text {
       color: white;
-      font-size: 1.2em;
-      margin-bottom: 30px;
+      font-size: 5vw;
+      margin-bottom: 20px;
       text-align: center;
       animation: aparecer 2s ease-in-out;
     }
 
     svg {
-      width: 350px;
-      height: 350px;
+      max-width: 90vw;
+      max-height: 60vh;
     }
 
     .petalo {
@@ -124,7 +113,7 @@
 
     @keyframes girar {
       from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      to   { transform: rotate(360deg); }
     }
 
     .centro {
@@ -134,10 +123,11 @@
 
     @keyframes latir {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      50%      { transform: scale(1.1); }
     }
 
-.tallo {
+    /* 🌱 Tallo y flor */
+    .tallo {
       width: 30px;
       height: 200px;
       background: green;
@@ -150,7 +140,7 @@
 
     @keyframes crecer {
       from { transform: scaleY(0); }
-      to { transform: scaleY(1); }
+      to   { transform: scaleY(1); }
     }
 
     .flor {
@@ -165,11 +155,9 @@
       to { opacity: 1; transform: scale(1) rotate(0deg); }
     }
 
-    audio {
-      display: none;
-    }
+    audio { display: none; }
 
-    /* Botón para activar música */
+    /* 🎵 Botón de música */
     #activarMusica {
       position: absolute;
       top: 20px;
@@ -193,10 +181,10 @@
 </head>
 <body>
 
-  <!-- Botón para activar música manualmente -->
+  <!-- 🎵 Botón de música -->
   <button id="activarMusica" aria-label="Activar música">🎵 Activar Música</button>
 
-  <!-- 🎵 Música -->
+  <!-- 🎶 Música -->
   <audio id="musica" loop>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_b1695b48e1.mp3" type="audio/mp3" />
     Tu navegador no soporta audio.
@@ -212,29 +200,40 @@
     💫 SERENDIPIA 💫
   </div>
 
-  <!-- 💖 Corazones flotantes -->
+  <!-- 💖 Corazones -->
   <div class="corazones" id="corazones"></div>
 
-  <!-- 🌻 ETAPA 3: FLOR -->
+  <!-- 🌻 ETAPA 3 -->
   <div id="girasol-container">
-    <div class="header-text">
-      🌼 Para vos con amor 🌼
-    </div>
+    <div class="header-text">🌼“Sonríe, porque la vida se pinta de colores esta temporada.” 🌼</div>
     <div class="flor">
       <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(200,200)" id="petalos"></g>
-        <circle class="centro" cx="200" cy="200" r="40" />
+        <circle class="centro" cx="0" cy="0" r="40" />
       </svg>
       <div class="tallo"></div>
     </div>
   </div>
 
-  <!-- 🎯 SCRIPT -->
   <script>
+    // 🎵 Control del audio
+    const musica = document.getElementById("musica");
+    const botonMusica = document.getElementById("activarMusica");
+
+    botonMusica.addEventListener("click", () => {
+      if (musica.paused) {
+        musica.play();
+        botonMusica.textContent = "🔇 Silenciar Música";
+      } else {
+        musica.pause();
+        botonMusica.textContent = "🎵 Activar Música";
+      }
+    });
+
     // 💖 Corazones flotantes
     const corazonesContainer = document.getElementById('corazones');
     const emojis = ['💖','💘','💕','❤️','🌸','💗','💞','🌷'];
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 20; i++) {
       const c = document.createElement('div');
       c.className = 'corazon';
       c.style.left = Math.random() * 100 + 'vw';
@@ -243,27 +242,26 @@
       corazonesContainer.appendChild(c);
     }
 
-    // 🕒 Transiciones automáticas
+    // ⏳ Transiciones
     setTimeout(() => {
       document.getElementById('etapa1').classList.add('hidden');
       document.getElementById('etapa2').classList.remove('hidden');
       document.getElementById('etapa2').classList.add('fade-in');
-    }, 5000);
+    }, 4000);
 
     setTimeout(() => {
       document.getElementById('etapa2').classList.add('hidden');
       document.getElementById('corazones').classList.add('hidden');
       document.getElementById('girasol-container').style.display = 'flex';
       generarFlor();
-    }, 8000);
+    }, 7000);
 
     // 🌻 Flor dinámica
     function generarFlor() {
       const svgNS = "http://www.w3.org/2000/svg";
       const group = document.getElementById("petalos");
 
-      const numPetalos = 18; // número de pétalos
-
+      const numPetalos = 18;
       for (let i = 0; i < numPetalos; i++) {
         for (let k = 0; k < 12; k++) {
           const petalo = document.createElementNS(svgNS, "ellipse");
@@ -278,6 +276,5 @@
       }
     }
   </script>
-
 </body>
 </html>
